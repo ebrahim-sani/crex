@@ -1,0 +1,6 @@
+{
+   "typescript.tsdk": "node_modules/typescript/lib",
+   "typescript.enablePromptUseWorkspaceTsdk": true,
+   "editor.fontSize": 13,
+   "editor.tabSize": 3
+}
