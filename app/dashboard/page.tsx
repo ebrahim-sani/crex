@@ -1,36 +1,70 @@
 import Image from "next/image";
 import React from "react";
-import { FiArrowUpRight } from "react-icons/fi";
-import { FiArrowDownRight } from "react-icons/fi";
-import GlobalStats from "./GlobalStats";
 
+import ChartComponent from "./ChartComponent";
+import CoinsStats from "./CoinsStats";
+
+import GlobalStats from "./GlobalStats";
 import Navbar from "./Navbar";
 
-const page = () => {
+type Object = {};
+
+const options: Object = {
+   params: {
+      referenceCurrencyUuid: "yhjMzLPhuIDl",
+      timePeriod: "3h",
+      "tiers[0]": "1",
+      orderBy: "marketCap",
+      orderDirection: "desc",
+      limit: "50",
+      offset: "0",
+   },
+   headers: {
+      "X-RapidAPI-Key": process.env.NEXT_PUBLIC_API_KEY,
+      "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
+   },
+};
+
+const getCoins = async () => {
+   const res = await fetch(
+      "https://coinranking1.p.rapidapi.com/coins",
+      options,
+   );
+   return res.json();
+};
+
+const page = async () => {
+   const fetchedData = await getCoins();
+
+   const {
+      data: { stats, coins },
+   } = fetchedData;
+
+   console.log(fetchedData);
+
    return (
-      <div className="flex-1 max-sm:w-full max-w-[1280px] max-[768px]:px-2 max-auto sm:pr-5">
+      <div className="flex-1 z-0 max-sm:w-full max-w-[1280px] max-[768px]:px-2 max-auto sm:pr-5">
          <div className="flex py-2 flex-col">
             <Navbar />
          </div>
 
          <div className="flex flex-col gap-2">
             {/* crypto status */}
-            <div className="flex items-center gap-2 overflow-hidden">
-               <div className="flex py-[4px] px-[6px] items-center gap-1 blue-glassmorphism">
-                  <p className="text-gray-400 text-xs">USD</p>
-                  <FiArrowUpRight className="text-green-700" />
-                  {/* <FiArrowDownRight className="text-red-700" /> */}
-                  <p className="text-gray-400 text-xs">+35%</p>
-               </div>
+            <div className="flex z-0">
+               {/* @ts-expect-error Server Component */}
+               <CoinsStats coins={coins} />
             </div>
 
             <div className="flex flex-1 items-start gap-2">
                {/* main view */}
-               <div className="flex lg:flex-[0.7] max-[768px]:flex-1">
+               <div className="flex flex-col gap-2 lg:flex-[0.7] max-[768px]:flex-1">
                   {/* should I bring `Gross Chart here` here?? */}
-                  <div></div>
-
-                  <GlobalStats />
+                  <div className="white-glass p-2 h-[340px] rounded-sm">
+                     {/* @ts-expect-error Server Component */}
+                     <ChartComponent />
+                  </div>
+                  {/* @ts-expect-error Server Component */}
+                  <GlobalStats stats={stats} />
                </div>
 
                {/* side view */}

@@ -28,21 +28,10 @@
    border: 1px solid rgba(225, 225, 225, 0.3);
 }
 :root {
-   background: #13131a;
-}
-/* #_rootBody {
-  background-image: url("/bg3.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-blend-mode: darken;
-} */
-
-@media screen and (min-width: 900px) {
-   #_rootBody {
-      background-position: bottom;
-      background-size: cover;
-   }
+   /* background: #13131a; */
+   background: #0f0f0f;
+   background: -webkit-linear-gradient(to right, #32302e, #1e130c);
+   background: linear-gradient(to right, #060504, #1e130c);
 }
 
 .borderR {

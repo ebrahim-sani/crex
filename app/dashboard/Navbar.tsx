@@ -12,9 +12,6 @@ const Navbar = () => {
    const [isActive, setIsActive] = useState<string>("dashboard");
    const [toggleMenu, setToggleMenu] = useState<boolean>(false);
    // const router = useRouter();
-   if (window.innerWidth >= 900) {
-      toggleMenu === true && setToggleMenu(false);
-   }
 
    return (
       <div className="flex md:flex-row justify-between gap-6">
