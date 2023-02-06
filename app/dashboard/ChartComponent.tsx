@@ -1,19 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ChartView from "./ChartView";
 import { options } from "../../utils/utils";
-
-// const labels = [
-//    "0s",
-//    "20s",
-//    "40s",
-//    "1m",
-//    "1.2m",
-//    "1.4m",
-//    "2m",
-//    "2.2m",
-//    "2.4m",
-//    "3m",
-// ];
+import Loading from "./loading";
 
 const rapidOptions: Object = {
    method: "GET",
@@ -37,22 +25,21 @@ export default async function ChartComponent() {
    const {
       data: { history },
    } = fetchedData;
-   // console.log(history.length);
+   // console.log(history);
 
-   const lab = (param: string) => {
+   const lab = () => {
       const gen_labels = [];
       for (let i = 0; i < history?.length; i++) {
-         gen_labels.push((param + (i + 1)).toString());
+         gen_labels.push(i + 1).toString();
       }
-      const label = gen_labels.splice(0, 40);
 
-      return label;
+      return gen_labels;
    };
 
-   // console.log(lab("tm"));
+   // console.log(lab());
 
    const dataSets: Object = {
-      labels: lab("tm"),
+      labels: lab(),
       datasets: [
          {
             label: "Price",
@@ -65,5 +52,11 @@ export default async function ChartComponent() {
       ],
    };
 
-   return <ChartView dataSets={dataSets} options={options} />;
+   return (
+      <div className="white-glass p-2 h-[340px] max-[321px]:w-full rounded-sm">
+         <Suspense fallback={<Loading message="Loading chart" />}>
+            <ChartView dataSets={dataSets} options={options} />
+         </Suspense>
+      </div>
+   );
 }

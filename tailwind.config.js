@@ -14,7 +14,7 @@ module.exports = {
             secondary: "10px 10px 20px rgba(2,2,2,0.25)",
          },
          animation: {
-            marquee: "marquee 100s linear infinite",
+            marquee: "marquee 150s linear infinite",
          },
          keyframes: {
             marquee: {

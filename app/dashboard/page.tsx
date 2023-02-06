@@ -1,10 +1,13 @@
-import Image from "next/image";
-import React from "react";
+import React, { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import ChartComponent from "./ChartComponent";
+import CoinsPriceHistory from "./CoinsPriceHistory";
 import CoinsStats from "./CoinsStats";
+import Error from "./error";
 
 import GlobalStats from "./GlobalStats";
+import Loading from "./loading";
 import Navbar from "./Navbar";
 
 type Object = {};
@@ -40,7 +43,7 @@ const page = async () => {
       data: { stats, coins },
    } = fetchedData;
 
-   console.log(fetchedData);
+   // console.log(fetchedData);
 
    return (
       <div className="flex-1 z-0 max-sm:w-full max-w-[1280px] max-[768px]:px-2 max-auto sm:pr-5">
@@ -48,33 +51,35 @@ const page = async () => {
             <Navbar />
          </div>
 
-         <div className="flex flex-col gap-2">
-            {/* crypto status */}
-            <div className="flex z-0">
-               {/* @ts-expect-error Server Component */}
-               <CoinsStats coins={coins} />
-            </div>
+         <Suspense fallback={<Loading message="Loading" />}>
+            <div className="flex flex-col gap-2">
+               <div className="overflow-x-clip xl:w-[1200px] lg:w-[900px] md:w-[760px]">
+                  {/* @ts-expect-error Server Component */}
+                  <CoinsStats coins={coins} />
+               </div>
 
-            <div className="flex flex-1 items-start gap-2">
-               {/* main view */}
-               <div className="flex flex-col gap-2 lg:flex-[0.7] max-[768px]:flex-1">
-                  {/* should I bring `Gross Chart here` here?? */}
-                  <div className="white-glass p-2 h-[340px] rounded-sm">
+               <div className="flex flex-1 items-start gap-2">
+                  {/* main view */}
+                  <div className="flex object-contain flex-col gap-4 lg:flex-[0.7] max-[768px]:flex-1">
+                     {/* <ErrorBoundary fallback={<Error />}> */}
                      {/* @ts-expect-error Server Component */}
                      <ChartComponent />
-                  </div>
-                  {/* @ts-expect-error Server Component */}
-                  <GlobalStats stats={stats} />
-               </div>
 
-               {/* side view */}
-               <div className="max-[768px]:hidden lg:flex lg:flex-[0.3] white-glassmorphism">
-                  {/* view top five with button below -> to view top 50 */}
-                  <div></div>
+                     {/* </ErrorBoundary> */}
+                     {/* @ts-expect-error Server Component */}
+                     <GlobalStats stats={stats} />
+                     <CoinsPriceHistory />
+                  </div>
+
+                  {/* side view */}
+                  <div className="max-[768px]:hidden lg:flex lg:flex-[0.3] white-glassmorphism">
+                     {/* view top five with button below -> to view top 50 */}
+                     <div></div>
+                  </div>
                </div>
+               <h1 className="text-[#46c87c] font-bold">Dashboard</h1>
             </div>
-            <h1 className="text-[#46c87c] font-bold">Dashboard</h1>
-         </div>
+         </Suspense>
       </div>
    );
 };

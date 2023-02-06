@@ -6,7 +6,7 @@ async function CoinsStats({ coins }: any) {
    // console.log(coins);
 
    return (
-      <div className="flex items-center gap-2 animate-marquee overflow-hidden">
+      <div className="flex object-contain items-center gap-2 animate-marquee z-0 whitespace-nowrap">
          {coins.map((coin: any) => (
             <div
                key={coin.name}

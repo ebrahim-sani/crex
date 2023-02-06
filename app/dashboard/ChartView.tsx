@@ -13,7 +13,6 @@ import {
    Legend,
    Filler,
 } from "chart.js";
-import { type } from "os";
 
 ChartJS.register(
    Title,
