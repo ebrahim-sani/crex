@@ -54,7 +54,7 @@ const page = async () => {
             <Error message="Something went wrong!" />
          ) : (
             <Suspense fallback={<Loading message="Loading" />}>
-               <div className="flex flex-col gap-2">
+               <div className="flex relative flex-col gap-2">
                   <div className="overflow-x-clip xl:w-[1200px] lg:w-[900px] md:w-[760px]">
                      {/* @ts-expect-error Server Component  */}
                      <CoinsStats coins={coins} />

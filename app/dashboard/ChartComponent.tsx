@@ -56,9 +56,9 @@ export default async function ChartComponent() {
    return (
       <div className="white-glass p-2 h-[340px] max-[321px]:w-full rounded-sm">
          {!history ? (
-            <Error message="Something went wrong loading Chart" />
+            <Error message="Something went wrong loading Chart.." />
          ) : (
-            <Suspense fallback={<Loading message="Loading chart" />}>
+            <Suspense fallback={<Loading message="Loading chart..." />}>
                <ChartView dataSets={dataSets} options={options} />
             </Suspense>
          )}
