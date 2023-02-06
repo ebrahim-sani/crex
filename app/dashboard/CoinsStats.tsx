@@ -1,6 +1,8 @@
 import React from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { FiArrowUpRight } from "react-icons/fi";
 import { FiArrowDownRight } from "react-icons/fi";
+import Error from "./error";
 
 async function CoinsStats({ coins }: any) {
    // console.log(coins);

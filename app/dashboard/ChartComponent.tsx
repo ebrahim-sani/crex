@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import ChartView from "./ChartView";
 import { options } from "../../utils/utils";
 import Loading from "./loading";
+import Error from "./error";
 
 const rapidOptions: Object = {
    method: "GET",
@@ -54,9 +55,13 @@ export default async function ChartComponent() {
 
    return (
       <div className="white-glass p-2 h-[340px] max-[321px]:w-full rounded-sm">
-         <Suspense fallback={<Loading message="Loading chart" />}>
-            <ChartView dataSets={dataSets} options={options} />
-         </Suspense>
+         {!history ? (
+            <Error message="Something went wrong loading Chart" />
+         ) : (
+            <Suspense fallback={<Loading message="Loading chart" />}>
+               <ChartView dataSets={dataSets} options={options} />
+            </Suspense>
+         )}
       </div>
    );
 }

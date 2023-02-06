@@ -50,36 +50,39 @@ const page = async () => {
          <div className="flex py-2 flex-col">
             <Navbar />
          </div>
-
-         <Suspense fallback={<Loading message="Loading" />}>
-            <div className="flex flex-col gap-2">
-               <div className="overflow-x-clip xl:w-[1200px] lg:w-[900px] md:w-[760px]">
-                  {/* @ts-expect-error Server Component */}
-                  <CoinsStats coins={coins} />
-               </div>
-
-               <div className="flex flex-1 items-start gap-2">
-                  {/* main view */}
-                  <div className="flex object-contain flex-col gap-4 lg:flex-[0.7] max-[768px]:flex-1">
-                     {/* <ErrorBoundary fallback={<Error />}> */}
-                     {/* @ts-expect-error Server Component */}
-                     <ChartComponent />
-
-                     {/* </ErrorBoundary> */}
-                     {/* @ts-expect-error Server Component */}
-                     <GlobalStats stats={stats} />
-                     <CoinsPriceHistory />
+         {!fetchedData ? (
+            <Error message="Something went wrong!" />
+         ) : (
+            <Suspense fallback={<Loading message="Loading" />}>
+               <div className="flex flex-col gap-2">
+                  <div className="overflow-x-clip xl:w-[1200px] lg:w-[900px] md:w-[760px]">
+                     {/* @ts-expect-error Server Component  */}
+                     <CoinsStats coins={coins} />
                   </div>
 
-                  {/* side view */}
-                  <div className="max-[768px]:hidden lg:flex lg:flex-[0.3] white-glassmorphism">
-                     {/* view top five with button below -> to view top 50 */}
-                     <div></div>
+                  <div className="flex flex-1 items-start gap-2">
+                     {/* main view */}
+                     <div className="flex object-contain flex-col gap-4 lg:flex-[0.7] max-[768px]:flex-1">
+                        {/* <ErrorBoundary fallback={<Error />}> */}
+                        {/* @ts-expect-error Server Component */}
+                        <ChartComponent />
+                        {/* </ErrorBoundary> */}
+                        {/* @ts-expect-error Server Component */}
+                        <GlobalStats stats={stats} />
+                        <CoinsPriceHistory coins={coins} />
+                     </div>
+
+                     {/* side view */}
+                     <div className="max-[768px]:hidden lg:flex lg:flex-[0.3] white-glassmorphism">
+                        {/* view top five with button below -> to view top 50 */}
+                        <div></div>
+                     </div>
                   </div>
+                  <h1 className="text-[#46c87c] font-bold">Dashboard</h1>
                </div>
-               <h1 className="text-[#46c87c] font-bold">Dashboard</h1>
-            </div>
-         </Suspense>
+            </Suspense>
+         )}
+         ;
       </div>
    );
 };
