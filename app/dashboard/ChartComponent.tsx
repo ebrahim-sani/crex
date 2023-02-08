@@ -54,7 +54,7 @@ export default async function ChartComponent() {
    };
 
    return (
-      <div className="white-glass p-2 h-[340px] max-[321px]:w-full rounded-sm">
+      <div className="white-glass p-2 h-[340px] max-[321px]:w-[98.5%] rounded-sm">
          {!history ? (
             <Error message="Something went wrong loading Chart.." />
          ) : (

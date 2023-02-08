@@ -1,9 +1,11 @@
+import Image from "next/image";
+import Link from "next/link";
 import React, { Suspense } from "react";
 import Loading from "./loading";
 
 const periods: string[] = ["3m", "1d", "3d", "1w"];
 
-const CoinsPriceHistory = ({ coins }: { coins: object[] }) => {
+const CoinsPriceHistory = ({ coins }: { coins: any }) => {
    // console.log(coins);
    return (
       <Suspense fallback={<Loading message="Loading coins..." />}>
@@ -22,46 +24,64 @@ const CoinsPriceHistory = ({ coins }: { coins: object[] }) => {
                      ))}
                   </div>
                </div>
-               <div className="flex">
-                  <table className="table-auto w-full">
-                     <thead>
-                        <tr className="text-gray-400 font-thin">
-                           <th className="flex items-start">No.</th>
-                           <th className="flex items-start">Coin</th>
-                           <th className="flex items-start">Name</th>
-                           <th className="flex items-start">Symbol</th>
-                           <th className="flex items-start">Change</th>
-                           <th className="flex items-start">Price</th>
+
+               <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                  <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                     <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
+                        <tr>
+                           <th scope="col" className="px-6 py-3 text-gray-400">
+                              No.
+                           </th>
+                           <th scope="col" className="px-6 py-3 text-gray-400">
+                              Coin
+                           </th>
+                           <th scope="col" className="px-6 py-3 text-gray-400">
+                              Name
+                           </th>
+                           <th scope="col" className="px-6 py-3 text-gray-400">
+                              Symbol
+                           </th>
+                           <th scope="col" className="px-6 py-3 text-gray-400">
+                              Change
+                           </th>
+                           <th scope="col" className="px-6 py-3 text-gray-400">
+                              Price
+                           </th>
                         </tr>
                      </thead>
                      <tbody>
-                        <tr>
-                           <td>1</td>
-                           <td>Witchy</td>
-                           <td>Witchy Woman</td>
-                           <td>The Eagles</td>
-                           <td>1972</td>
-                           <td>1972</td>
-                        </tr>
-                        <tr>
-                           <td>1</td>
-                           <td>Witchy</td>
-                           <td>Witchy Woman</td>
-                           <td>The Eagles</td>
-                           <td>1972</td>
-                           <td>1972</td>
-                        </tr>
-                        <tr>
-                           <td>1</td>
-                           <td>Witchy</td>
-                           <td>Witchy Woman</td>
-                           <td>The Eagles</td>
-                           <td>1972</td>
-                           <td>1972</td>
-                        </tr>
+                        {coins.slice(0, 5).map((coin: any, i: number) => (
+                           <tr key={i} className="border-b border-gray-800">
+                              <th
+                                 scope="row"
+                                 className="px-6 py-4 font-medium text-gray-400 whitespace-nowrap"
+                              >
+                                 {coin.rank}
+                              </th>
+                              <td className="px-6 py-4">
+                                 <div className="">
+                                    <img
+                                       src={coin.iconUrl}
+                                       width={30}
+                                       height={30}
+                                       alt="icon"
+                                    />
+                                 </div>
+                              </td>
+                              <td className="px-6 py-4">{coin.name}</td>
+                              <td className="px-6 py-4">{coin.symbol}</td>
+                              <td className="px-6 py-4">{coin.change}</td>
+                              <td className="px-6 py-4">{coin.price}</td>
+                           </tr>
+                        ))}
                      </tbody>
                   </table>
                </div>
+               <Link href="/dashboard/coins-price">
+                  <p className="p-2 customBg flex justify-center text-white rounded-lg shadow-sm hover:shadow-lg">
+                     View All
+                  </p>
+               </Link>
             </div>
          </div>
       </Suspense>
